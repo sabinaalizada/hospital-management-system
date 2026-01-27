@@ -15,6 +15,16 @@ spring:
     hibernate:
       ddl-auto: update
 
+
+  mongodb:
+    host: localhost
+    port: 27017
+    database: your_database_name
+    username: your_username
+    password: your_password
+    uri: mongodb://[username:password@]host:port/database # Alternative to host/port/database
+
+
   liquibase:
     enabled: true
     change-log: classpath:/liquibase/changelog-master.yml

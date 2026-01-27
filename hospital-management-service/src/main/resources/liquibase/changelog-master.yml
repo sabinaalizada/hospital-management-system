@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - include:
+      file: liquibase/changelog/28-01-2026-create-department-table.yml
+  - include:
+      file: liquibase/changelog/28-01-2026-create-doctor-table.yml
+  - include:
+      file: liquibase/changelog/28-01-2026-create-patient-table.yml
+  - include:
+      file: liquibase/changelog/28-01-2026-create-appointment-table.yml
+  - include:
+      file: liquibase/changelog/28-01-2026-create-doctor-patient-table.yml
