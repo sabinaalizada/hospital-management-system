@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/students
+    url: jdbc:postgresql://localhost:5432/hospital
     username: postgres
     password: admin
     driver-class-name: org.postgresql.Driver
@@ -17,13 +17,7 @@ spring:
 
 
   mongodb:
-    host: localhost
-    port: 27017
-    database: your_database_name
-    username: your_username
-    password: your_password
-    uri: mongodb://[username:password@]host:port/database # Alternative to host/port/database
-
+    uri: mongodb://admin:admin@mongo:27017/hospital?authSource=admin
 
   liquibase:
     enabled: true

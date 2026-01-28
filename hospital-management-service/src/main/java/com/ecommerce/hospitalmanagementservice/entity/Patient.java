@@ -51,7 +51,7 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     private List<Appointment> appointments;
 
-    @ManyToMany(mappedBy = "doctors")
+    @ManyToMany(mappedBy = "patients")
     private List<Doctor> doctors;
 
     @CreationTimestamp
