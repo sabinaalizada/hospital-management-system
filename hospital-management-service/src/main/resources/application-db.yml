@@ -17,10 +17,11 @@ spring:
 
 
   mongodb:
-    uri: mongodb://admin:admin@mongo:27017/hospital?authSource=admin
+    uri: mongodb://admin:admin@localhost:27017/hospital?authSource=admin
 
   liquibase:
     enabled: true
     change-log: classpath:/liquibase/changelog-master.yml
     database-change-log-table: DATABASECHANGELOG
     database-change-log-lock-table: DATABASECHANGELOGLOCK
+    clear-check-sums: true

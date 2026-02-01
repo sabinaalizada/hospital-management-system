@@ -17,7 +17,6 @@ databaseChangeLog:
               - column:
                   name: public_id
                   type: UUID
-                  defaultValueComputed: "gen_random_uuid()"
                   constraints:
                     nullable: false
                     unique: true
@@ -38,13 +37,21 @@ databaseChangeLog:
               - column:
                   name: created_at
                   type: TIMESTAMP
-                  defaultValueComputed: "CURRENT_TIMESTAMP"
                   constraints:
                     nullable: false
 
               - column:
                   name: updated_at
                   type: TIMESTAMP
-                  defaultValueComputed: "CURRENT_TIMESTAMP"
                   constraints:
                     nullable: false
+
+        - addUniqueConstraint:
+            columnNames: public_id
+            tableName: department
+            constraintName: uq_department_public_id
+
+        - addUniqueConstraint:
+            columnNames: name
+            tableName: department
+            constraintName: uq_department_name

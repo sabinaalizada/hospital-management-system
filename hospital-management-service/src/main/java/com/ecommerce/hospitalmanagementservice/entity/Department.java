@@ -17,13 +17,17 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(uniqueConstraints = {
+        @UniqueConstraint(name = "PublicId", columnNames = {"public_Id"}),
+        @UniqueConstraint(name = "DepartmentName", columnNames = {"name"})
+})
 public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, updatable = false)
+    @Column(nullable = false, updatable = false)
     private UUID publicId;
 
     @Column(nullable = false, length = 100)
@@ -45,7 +49,10 @@ public class Department {
 
     @PrePersist
     public void generatePublicId() {
-        this.publicId = UUID.randomUUID();
+        if (this.publicId == null) {
+            this.publicId = UUID.randomUUID();
+        }
     }
+
 
 }
