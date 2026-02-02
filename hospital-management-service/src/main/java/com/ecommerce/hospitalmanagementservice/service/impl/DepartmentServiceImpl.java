@@ -1,11 +1,13 @@
 package com.ecommerce.hospitalmanagementservice.service.impl;
 
 import com.ecommerce.hospitalmanagementservice.dto.request.DepartmentRequestDto;
+import com.ecommerce.hospitalmanagementservice.dto.request.DepartmentUpdateDto;
 import com.ecommerce.hospitalmanagementservice.dto.response.DepartmentResponseDto;
 import com.ecommerce.hospitalmanagementservice.entity.Department;
 import com.ecommerce.hospitalmanagementservice.mapper.DepartmentMapper;
 import com.ecommerce.hospitalmanagementservice.repository.DepartmentRepo;
 import com.ecommerce.hospitalmanagementservice.service.DepartmentService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +24,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentResponseDto addDepartment(DepartmentRequestDto departmentRequestDto) {
         Department department = departmentMapper.departmentRequestDtoToDepartment(departmentRequestDto);
-        String departmentName = department.getName().toUpperCase().trim();
-        if (departmentRepo.existsByNameIgnoreCase(departmentName)) {
+
+        if (departmentRepo.existsByNameIgnoreCase(department.getName())) {
             throw new RuntimeException("Department already exists");
         }
-        department.setName(departmentName);
+
         departmentRepo.save(department);
         return departmentMapper.departmentToDepartmentResponseDto(department);
     }
@@ -41,21 +43,24 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
 
+    @Transactional
     @Override
-    public DepartmentResponseDto updateDepartment(DepartmentRequestDto departmentRequestDto, Long id) {
+    public DepartmentResponseDto updateDepartment(DepartmentUpdateDto departmentUpdateDto, Long id) {
         Department department = getDepartmentById(id);
 
-        String departmentName = departmentRequestDto.getName().toUpperCase().trim();
-        if (departmentRepo.existsByNameIgnoreCaseAndIdNot(departmentName, id)) {
-            throw new RuntimeException("Department already exists");
+        if (departmentUpdateDto.getName() != null) {
+            if (departmentRepo.existsByNameIgnoreCaseAndIdNot(departmentUpdateDto.getName(), id)) {
+                throw new RuntimeException("Department already exists");
+            }
         }
 
-        departmentMapper.updateDepartment(department, departmentRequestDto);
-        department.setName(departmentName);
+        departmentMapper.updateDepartment(department, departmentUpdateDto);
+
         departmentRepo.save(department);
         return departmentMapper.departmentToDepartmentResponseDto(department);
     }
 
+    @Transactional
     @Override
     public String deleteDepartment(Long id) {
         Department department = getDepartmentById(id);
@@ -66,7 +71,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentResponseDto getDepartmentByName(String departmentName) {
         Department department = departmentRepo
-                .findByName(departmentName)
+                .findByNameIgnoreCase(departmentName)
                 .orElseThrow();
         return departmentMapper.departmentToDepartmentResponseDto(department);
     }

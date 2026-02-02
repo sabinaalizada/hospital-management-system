@@ -1,6 +1,7 @@
 package com.ecommerce.hospitalmanagementservice.controller;
 
 import com.ecommerce.hospitalmanagementservice.dto.request.DepartmentRequestDto;
+import com.ecommerce.hospitalmanagementservice.dto.request.DepartmentUpdateDto;
 import com.ecommerce.hospitalmanagementservice.dto.response.DepartmentResponseDto;
 import com.ecommerce.hospitalmanagementservice.service.DepartmentService;
 import jakarta.validation.Valid;
@@ -26,17 +27,17 @@ public class DepartmentController {
         return new ResponseEntity<>(departmentResponseDto, HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PatchMapping("/{id}")
     public ResponseEntity<DepartmentResponseDto> updateDepartment(
-            @Valid @RequestBody DepartmentRequestDto departmentRequestDto,
-            @RequestParam Long id) {
+            @Valid @RequestBody DepartmentUpdateDto departmentUpdateDto,
+            @PathVariable Long id) {
         DepartmentResponseDto departmentResponseDto = departmentService
-                .updateDepartment(departmentRequestDto, id);
-        return new ResponseEntity<>(departmentResponseDto, HttpStatus.CREATED);
+                .updateDepartment(departmentUpdateDto, id);
+        return new ResponseEntity<>(departmentResponseDto, HttpStatus.OK);
     }
 
-    @GetMapping("/delete")
-    public ResponseEntity<String> deleteDepartment(@RequestParam Long id) {
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<String> deleteDepartment(@PathVariable Long id) {
         String str = departmentService.deleteDepartment(id);
         return new ResponseEntity<>(str, HttpStatus.NO_CONTENT);
     }

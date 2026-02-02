@@ -52,7 +52,9 @@ public class Department {
         if (this.publicId == null) {
             this.publicId = UUID.randomUUID();
         }
+
+        if (name != null) {
+            name = name.toUpperCase();
+        }
     }
-
-
 }
