@@ -4,6 +4,8 @@ import com.ecommerce.hospitalmanagementservice.dto.request.DepartmentRequestDto;
 import com.ecommerce.hospitalmanagementservice.dto.request.DepartmentUpdateDto;
 import com.ecommerce.hospitalmanagementservice.dto.response.DepartmentResponseDto;
 import com.ecommerce.hospitalmanagementservice.entity.Department;
+import com.ecommerce.hospitalmanagementservice.exception.DepartmentAlreadyExistException;
+import com.ecommerce.hospitalmanagementservice.exception.DepartmentNotFoundException;
 import com.ecommerce.hospitalmanagementservice.mapper.DepartmentMapper;
 import com.ecommerce.hospitalmanagementservice.repository.DepartmentRepo;
 import com.ecommerce.hospitalmanagementservice.service.DepartmentService;
@@ -26,7 +28,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department department = departmentMapper.departmentRequestDtoToDepartment(departmentRequestDto);
 
         if (departmentRepo.existsByNameIgnoreCase(department.getName())) {
-            throw new RuntimeException("Department already exists");
+            throw new DepartmentAlreadyExistException(department.getName());
         }
 
         departmentRepo.save(department);
@@ -50,7 +52,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
         if (departmentUpdateDto.getName() != null) {
             if (departmentRepo.existsByNameIgnoreCaseAndIdNot(departmentUpdateDto.getName(), id)) {
-                throw new RuntimeException("Department already exists");
+                throw new DepartmentAlreadyExistException(departmentUpdateDto.getName());
             }
         }
 
@@ -72,13 +74,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentResponseDto getDepartmentByName(String departmentName) {
         Department department = departmentRepo
                 .findByNameIgnoreCase(departmentName)
-                .orElseThrow();
+                .orElseThrow(() -> new DepartmentNotFoundException("department name",departmentName));
         return departmentMapper.departmentToDepartmentResponseDto(department);
     }
 
     private Department getDepartmentById(Long id) {
         return departmentRepo
                 .findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new DepartmentNotFoundException("id",id));
     }
 }
