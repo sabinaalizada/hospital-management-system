@@ -15,7 +15,7 @@ import lombok.Setter;
 public class DepartmentRequestDto {
 
     @NotBlank(message = "Name can not be null or empty")
-    @Size(max = 100, message = "Name's length must be at least 100")
+    @Size(min = 3, max = 100, message = "Name's length must be at least 100")
     @OnlyLetters(allowSpace = true)
     private String name;
 

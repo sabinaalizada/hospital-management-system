@@ -4,18 +4,18 @@ package com.ecommerce.hospitalmanagementservice.exception.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Getter
-@Setter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomErrorResponse {
-    private String type;
-    private String title;
-    private int status;
-    private String detail;
-    private LocalDateTime timestamp;
+    private final String type;
+    private final String title;
+    private final int status;
+    private final String detail;
+    private final LocalDateTime timestamp;
+    private final Map<String, String> errors;
 }

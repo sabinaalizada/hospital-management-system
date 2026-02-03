@@ -9,10 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
@@ -20,10 +21,9 @@ import java.time.LocalDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(DepartmentNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public CustomErrorResponse departmentNotFound(DepartmentNotFoundException exception) {
+    public ResponseEntity<CustomErrorResponse> departmentNotFound(DepartmentNotFoundException exception) {
 
-        return CustomErrorResponse.builder()
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
                 .type("errors/department-not-found")
                 .title("Department Not Found")
                 .status(HttpStatus.NOT_FOUND.value())
@@ -31,32 +31,63 @@ public class GlobalExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .build();
 
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(errorResponse);
 
     }
 
     @ExceptionHandler(DepartmentAlreadyExistException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public CustomErrorResponse departmentAlreadyExistException(DepartmentAlreadyExistException exception) {
+    public ResponseEntity<CustomErrorResponse> departmentAlreadyExistException(DepartmentAlreadyExistException exception) {
 
-        return CustomErrorResponse.builder()
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
                 .type("errors/department-already-exist")
                 .title("Department Already Exist")
                 .status(HttpStatus.BAD_REQUEST.value())
                 .detail(exception.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(errorResponse);
+
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<CustomErrorResponse> handleValidationExceptions(MethodArgumentNotValidException exception) {
+
+        Map<String, String> errors = new HashMap<>();
+        exception.getBindingResult().getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage())
+        );
+
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
+                .type("errors/method-argument-not-valid-exception")
+                .title("Validation Failed")
+                .status(HttpStatus.BAD_REQUEST.value())
+                .errors(errors)
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(errorResponse);
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public CustomErrorResponse exception(Exception exception) {
+    public ResponseEntity<CustomErrorResponse> exception(Exception exception) {
 
-        return CustomErrorResponse.builder()
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
                 .type("errors/internal-server-error")
                 .title("INTERNAL_SERVER_ERROR")
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .detail(exception.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(errorResponse);
     }
 }

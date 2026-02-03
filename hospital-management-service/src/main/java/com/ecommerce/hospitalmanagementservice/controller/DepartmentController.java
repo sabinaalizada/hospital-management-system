@@ -48,8 +48,8 @@ public class DepartmentController {
         return new ResponseEntity<>(departmentResponseDtos, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<DepartmentResponseDto> getDepartmentByName(@RequestParam String name) {
+    @GetMapping("/{name}")
+    public ResponseEntity<DepartmentResponseDto> getDepartmentByName(@PathVariable String name) {
         DepartmentResponseDto departmentResponseDto = departmentService.getDepartmentByName(name);
         return new ResponseEntity<>(departmentResponseDto, HttpStatus.OK);
     }
