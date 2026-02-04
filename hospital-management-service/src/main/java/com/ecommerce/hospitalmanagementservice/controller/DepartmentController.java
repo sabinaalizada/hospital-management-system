@@ -1,7 +1,7 @@
 package com.ecommerce.hospitalmanagementservice.controller;
 
-import com.ecommerce.hospitalmanagementservice.dto.request.DepartmentRequestDto;
-import com.ecommerce.hospitalmanagementservice.dto.request.DepartmentUpdateDto;
+import com.ecommerce.hospitalmanagementservice.dto.request.department.DepartmentRequestDto;
+import com.ecommerce.hospitalmanagementservice.dto.request.department.DepartmentUpdateDto;
 import com.ecommerce.hospitalmanagementservice.dto.response.DepartmentResponseDto;
 import com.ecommerce.hospitalmanagementservice.service.DepartmentService;
 import jakarta.validation.Valid;

@@ -21,12 +21,12 @@ databaseChangeLog:
                     unique: true
               - column:
                   name: first_name
-                  type: VARCHAR(50)
+                  type: VARCHAR(20)
                   constraints:
                     nullable: false
               - column:
                   name: last_name
-                  type: VARCHAR(50)
+                  type: VARCHAR(30)
                   constraints:
                     nullable: false
               - column:
@@ -34,7 +34,7 @@ databaseChangeLog:
                   type: VARCHAR(10)
               - column:
                   name: specialization
-                  type: VARCHAR(100)
+                  type: VARCHAR(50)
               - column:
                   name: license_number
                   type: VARCHAR(9)

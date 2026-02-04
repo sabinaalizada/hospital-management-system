@@ -31,16 +31,16 @@ public class Doctor {
     @Column(nullable = false, updatable = false)
     private UUID publicId;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 20)
     private String firstName;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 30)
     private String lastName;
 
     @Column(length = 10, nullable = false)
     private String phone;
 
-    @Column(length = 100)
+    @Column(length = 50)
     private String specialization;
 
     @Column(nullable = false, length = 9)

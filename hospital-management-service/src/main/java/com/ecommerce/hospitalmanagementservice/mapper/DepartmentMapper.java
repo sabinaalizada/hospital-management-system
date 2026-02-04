@@ -1,7 +1,7 @@
 package com.ecommerce.hospitalmanagementservice.mapper;
 
-import com.ecommerce.hospitalmanagementservice.dto.request.DepartmentRequestDto;
-import com.ecommerce.hospitalmanagementservice.dto.request.DepartmentUpdateDto;
+import com.ecommerce.hospitalmanagementservice.dto.request.department.DepartmentRequestDto;
+import com.ecommerce.hospitalmanagementservice.dto.request.department.DepartmentUpdateDto;
 import com.ecommerce.hospitalmanagementservice.dto.response.DepartmentResponseDto;
 import com.ecommerce.hospitalmanagementservice.entity.Department;
 import org.mapstruct.*;
@@ -12,7 +12,7 @@ public interface DepartmentMapper {
     DepartmentResponseDto departmentToDepartmentResponseDto(Department department);
 
 
-    @Mapping(target = "name", expression = "java(trim(departmentRequestDto.getName()))")
+//    @Mapping(target = "name", expression = "java(trim(departmentRequestDto.getName()))")
     @Mapping(target = "description", expression = "java(trim(departmentRequestDto.getDescription()))")
     Department departmentRequestDtoToDepartment(DepartmentRequestDto departmentRequestDto);
 
@@ -21,9 +21,9 @@ public interface DepartmentMapper {
 
     @BeforeMapping
     default void trimUpdateDto(DepartmentUpdateDto dto) {
-        if (dto.getName() != null) {
-            dto.setName(dto.getName().trim());
-        }
+//        if (dto.getName() != null) {
+//            dto.setName(dto.getName().trim());
+//        }
         if (dto.getDescription() != null) {
             dto.setDescription(dto.getDescription().trim());
         }

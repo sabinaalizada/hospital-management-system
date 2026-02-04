@@ -1,7 +1,7 @@
 package com.ecommerce.hospitalmanagementservice.service.impl;
 
-import com.ecommerce.hospitalmanagementservice.dto.request.DepartmentRequestDto;
-import com.ecommerce.hospitalmanagementservice.dto.request.DepartmentUpdateDto;
+import com.ecommerce.hospitalmanagementservice.dto.request.department.DepartmentRequestDto;
+import com.ecommerce.hospitalmanagementservice.dto.request.department.DepartmentUpdateDto;
 import com.ecommerce.hospitalmanagementservice.dto.response.DepartmentResponseDto;
 import com.ecommerce.hospitalmanagementservice.entity.Department;
 import com.ecommerce.hospitalmanagementservice.exception.DepartmentAlreadyExistException;
@@ -74,13 +74,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentResponseDto getDepartmentByName(String departmentName) {
         Department department = departmentRepo
                 .findByNameIgnoreCase(departmentName)
-                .orElseThrow(() -> new DepartmentNotFoundException("department name",departmentName));
+                .orElseThrow(() -> new DepartmentNotFoundException("department name", departmentName));
         return departmentMapper.departmentToDepartmentResponseDto(department);
     }
 
-    private Department getDepartmentById(Long id) {
+    public Department getDepartmentById(Long id) {
         return departmentRepo
                 .findById(id)
-                .orElseThrow(() -> new DepartmentNotFoundException("id",id));
+                .orElseThrow(() -> new DepartmentNotFoundException("id", id));
     }
 }

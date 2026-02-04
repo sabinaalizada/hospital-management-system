@@ -2,6 +2,7 @@ package com.ecommerce.hospitalmanagementservice.dto.request.doctor;
 
 import com.ecommerce.hospitalmanagementservice.validation.annotation.DoctorLicenseNumber;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.OnlyLetters;
+import com.ecommerce.hospitalmanagementservice.validation.annotation.PhoneNumber;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -24,9 +25,10 @@ public class DoctorUpdateDto {
     @OnlyLetters
     private String lastName;
 
+    @PhoneNumber
     private String phone;
 
-    @Size(min = 3, max = 50, message = "Last name's length must be min = 3 and max = 30")
+    @Size(min = 3, max = 50, message = "Last name's length must be min = 3 and max = 50")
     @OnlyLetters
     private String specialization;
 
@@ -34,6 +36,5 @@ public class DoctorUpdateDto {
     @DoctorLicenseNumber
     private String licenseNumber;
 
-    @NotNull(message = "Name can not be null or empty")
-    private long departmentId;
+    private Long departmentId;
 }
