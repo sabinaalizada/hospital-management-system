@@ -1,0 +1,43 @@
+package com.ecommerce.hospitalmanagementservice.dto.request.doctor;
+
+import com.ecommerce.hospitalmanagementservice.validation.annotation.DoctorLicenseNumber;
+import com.ecommerce.hospitalmanagementservice.validation.annotation.OnlyLetters;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class DoctorRequestDto {
+
+    @NotBlank(message = "Name can not be null or empty")
+    @Size(min = 3, max = 20, message = "Name's length must be min = 3 and max = 100")
+    @OnlyLetters
+    private String firstName;
+
+    @NotBlank(message = "Last name can not be null or empty")
+    @Size(min = 3, max = 30, message = "Last name's length must be min = 3 and max = 30")
+    @OnlyLetters
+    private String lastName;
+
+    @NotBlank(message = "License number name can not be null or empty")
+    private String phone; //phone validation
+
+    @NotBlank(message = "Specialization name can not be null or empty")
+    @Size(min = 3, max = 50, message = "Last name's length must be min = 3 and max = 30")
+    @OnlyLetters
+    private String specialization;
+
+    @NotBlank(message = "License number name can not be null or empty")
+    @DoctorLicenseNumber
+    private String licenseNumber;
+
+    @NotNull(message = "Name can not be null or empty")
+    private long departmentId;
+}
