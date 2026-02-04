@@ -17,13 +17,18 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(uniqueConstraints = {
+        @UniqueConstraint(name = "PublicId", columnNames = {"public_Id"}),
+        @UniqueConstraint(name = "DoctorPhone", columnNames = {"phone"}),
+        @UniqueConstraint(name = "DoctorLicenseNumber", columnNames = {"license_Number"})
+})
 public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, updatable = false)
+    @Column(nullable = false, updatable = false)
     private UUID publicId;
 
     @Column(nullable = false, length = 50)
@@ -32,13 +37,13 @@ public class Doctor {
     @Column(nullable = false, length = 50)
     private String lastName;
 
-    @Column(length = 20)
+    @Column(length = 10, nullable = false)
     private String phone;
 
     @Column(length = 100)
     private String specialization;
 
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(nullable = false, length = 9)
     private String licenseNumber;
 
     @ManyToOne
@@ -59,4 +64,11 @@ public class Doctor {
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        if (publicId == null) {
+            publicId = UUID.randomUUID();
+        }
+    }
 }

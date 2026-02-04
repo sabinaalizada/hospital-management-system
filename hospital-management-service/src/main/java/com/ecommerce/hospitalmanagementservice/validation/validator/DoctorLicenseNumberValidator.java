@@ -7,11 +7,6 @@ import jakarta.validation.ConstraintValidatorContext;
 public class DoctorLicenseNumberValidator implements ConstraintValidator<DoctorLicenseNumber, String> {
 
     @Override
-    public void initialize(DoctorLicenseNumber constraintAnnotation) {
-        ConstraintValidator.super.initialize(constraintAnnotation);
-    }
-
-    @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
         if(s == null || s.isEmpty()) return true;
 
