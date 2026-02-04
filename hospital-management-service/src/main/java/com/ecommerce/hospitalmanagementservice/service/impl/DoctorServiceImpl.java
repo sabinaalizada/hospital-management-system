@@ -4,6 +4,8 @@ import com.ecommerce.hospitalmanagementservice.dto.request.doctor.DoctorRequestD
 import com.ecommerce.hospitalmanagementservice.dto.request.doctor.DoctorUpdateDto;
 import com.ecommerce.hospitalmanagementservice.dto.response.DoctorResponseDto;
 import com.ecommerce.hospitalmanagementservice.entity.Doctor;
+import com.ecommerce.hospitalmanagementservice.exception.doctor.DoctorAlreadyExistException;
+import com.ecommerce.hospitalmanagementservice.exception.doctor.DoctorNotFoundException;
 import com.ecommerce.hospitalmanagementservice.mapper.DoctorMapper;
 import com.ecommerce.hospitalmanagementservice.repository.DoctorRepo;
 import com.ecommerce.hospitalmanagementservice.service.DepartmentService;
@@ -28,7 +30,7 @@ public class DoctorServiceImpl implements DoctorService {
         Doctor doctor = doctorMapper.doctorRequestDtoToDoctor(doctorRequestDto);
 
         if (doctorRepo.existsDoctorByLicenseNumber(doctor.getLicenseNumber())) {
-            throw new RuntimeException("throw");
+            throw new DoctorAlreadyExistException("Doctor already exist");
         }
 
         doctorRepo.save(doctor);
@@ -42,7 +44,7 @@ public class DoctorServiceImpl implements DoctorService {
 
         if (updateDto.getLicenseNumber() != null) {
             if (doctorRepo.existsDoctorByLicenseNumberAndIdNot(updateDto.getLicenseNumber(), id)) {
-                throw new RuntimeException("throw");
+                throw new DoctorAlreadyExistException("Doctor already exist");
             }
         }
 
@@ -77,7 +79,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     private Doctor getDoctorById(long id) {
-        return doctorRepo.findById(id).orElseThrow();
+        return doctorRepo.findById(id).orElseThrow(()-> new DoctorNotFoundException("id",id));
     }
 }
 

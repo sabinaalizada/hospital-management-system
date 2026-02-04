@@ -1,7 +1,9 @@
 package com.ecommerce.hospitalmanagementservice.exception.handler;
 
-import com.ecommerce.hospitalmanagementservice.exception.DepartmentAlreadyExistException;
-import com.ecommerce.hospitalmanagementservice.exception.DepartmentNotFoundException;
+import com.ecommerce.hospitalmanagementservice.exception.department.DepartmentAlreadyExistException;
+import com.ecommerce.hospitalmanagementservice.exception.department.DepartmentNotFoundException;
+import com.ecommerce.hospitalmanagementservice.exception.doctor.DoctorAlreadyExistException;
+import com.ecommerce.hospitalmanagementservice.exception.doctor.DoctorNotFoundException;
 import com.ecommerce.hospitalmanagementservice.exception.model.CustomErrorResponse;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +52,40 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
+                .body(errorResponse);
+
+    }
+
+    @ExceptionHandler(DoctorAlreadyExistException.class)
+    public ResponseEntity<CustomErrorResponse> doctorAlreadyExistException(DoctorAlreadyExistException exception) {
+
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
+                .type("errors/doctor-already-exist")
+                .title("Doctor Already Exist")
+                .status(HttpStatus.BAD_REQUEST.value())
+                .detail(exception.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(errorResponse);
+
+    }
+
+    @ExceptionHandler(DoctorNotFoundException.class)
+    public ResponseEntity<CustomErrorResponse> doctorNotFound(DoctorNotFoundException exception) {
+
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
+                .type("errors/doctor-not-found")
+                .title("Doctor Not Found")
+                .status(HttpStatus.NOT_FOUND.value())
+                .detail(exception.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
                 .body(errorResponse);
 
     }

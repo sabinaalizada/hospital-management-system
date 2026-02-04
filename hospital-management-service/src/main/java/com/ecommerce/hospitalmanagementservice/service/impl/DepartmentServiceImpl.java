@@ -4,8 +4,8 @@ import com.ecommerce.hospitalmanagementservice.dto.request.department.Department
 import com.ecommerce.hospitalmanagementservice.dto.request.department.DepartmentUpdateDto;
 import com.ecommerce.hospitalmanagementservice.dto.response.DepartmentResponseDto;
 import com.ecommerce.hospitalmanagementservice.entity.Department;
-import com.ecommerce.hospitalmanagementservice.exception.DepartmentAlreadyExistException;
-import com.ecommerce.hospitalmanagementservice.exception.DepartmentNotFoundException;
+import com.ecommerce.hospitalmanagementservice.exception.department.DepartmentAlreadyExistException;
+import com.ecommerce.hospitalmanagementservice.exception.department.DepartmentNotFoundException;
 import com.ecommerce.hospitalmanagementservice.mapper.DepartmentMapper;
 import com.ecommerce.hospitalmanagementservice.repository.DepartmentRepo;
 import com.ecommerce.hospitalmanagementservice.service.DepartmentService;

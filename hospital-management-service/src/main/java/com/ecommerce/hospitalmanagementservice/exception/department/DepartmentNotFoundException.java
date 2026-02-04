@@ -1,4 +1,4 @@
-package com.ecommerce.hospitalmanagementservice.exception;
+package com.ecommerce.hospitalmanagementservice.exception.department;
 
 import lombok.Getter;
 
