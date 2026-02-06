@@ -9,3 +9,4 @@ public record DoctorResponseDto(Long id,
                                 String specialization,
                                 String licenseNumber) {
 }
+

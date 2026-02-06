@@ -3,8 +3,6 @@ package com.ecommerce.hospitalmanagementservice.dto.request.doctor;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.DoctorLicenseNumber;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.OnlyLetters;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.PhoneNumber;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,7 +30,6 @@ public class DoctorUpdateDto {
     @OnlyLetters
     private String specialization;
 
-    @NotBlank(message = "License number name can not be null or empty")
     @DoctorLicenseNumber
     private String licenseNumber;
 

@@ -41,5 +41,5 @@ public class DoctorRequestDto {
     private String licenseNumber;
 
     @NotNull(message = "Name can not be null or empty")
-    private long departmentId;
+    private Long departmentId;
 }

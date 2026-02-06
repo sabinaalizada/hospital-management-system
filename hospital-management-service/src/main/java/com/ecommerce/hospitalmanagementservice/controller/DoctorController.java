@@ -4,6 +4,7 @@ import com.ecommerce.hospitalmanagementservice.dto.request.doctor.DoctorRequestD
 import com.ecommerce.hospitalmanagementservice.dto.request.doctor.DoctorUpdateDto;
 import com.ecommerce.hospitalmanagementservice.dto.response.DoctorResponseDto;
 import com.ecommerce.hospitalmanagementservice.service.DoctorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +19,14 @@ public class DoctorController {
     private final DoctorService doctorService;
 
     @PostMapping
-    public ResponseEntity<DoctorResponseDto> createDoctor(@RequestBody DoctorRequestDto doctorRequestDto) {
+    public ResponseEntity<DoctorResponseDto> createDoctor(@Valid @RequestBody DoctorRequestDto doctorRequestDto) {
         DoctorResponseDto doctorResponseDto = doctorService.addDoctor(doctorRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(doctorResponseDto);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<DoctorResponseDto> updateDoctor(
-            @RequestBody DoctorUpdateDto updateDto,
+            @Valid @RequestBody DoctorUpdateDto updateDto,
             @PathVariable Long id) {
         DoctorResponseDto doctorResponseDto = doctorService.updateDoctor(updateDto,id);
         return ResponseEntity.status(HttpStatus.OK).body(doctorResponseDto);
