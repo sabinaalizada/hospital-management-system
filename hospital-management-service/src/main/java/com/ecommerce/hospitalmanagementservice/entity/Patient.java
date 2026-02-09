@@ -28,21 +28,23 @@ public class Patient {
     @Column(nullable = false, unique = true, updatable = false)
     private UUID publicId;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 20)
     private String firstName;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 30)
     private String lastName;
 
-    @Column(length = 20)
+    @Column(nullable = false, length = 10)
     private String phone;
 
-    @Column(length = 200)
+    @Column(nullable = false, length = 200)
     private String address;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Column(nullable = false)
     private LocalDate birthDate;
 
     @OneToMany(mappedBy = "patient")
