@@ -50,9 +50,6 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     private List<Appointment> appointments;
 
-    @ManyToMany(mappedBy = "patients")
-    private List<Doctor> doctors;
-
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

@@ -46,16 +46,12 @@ public class Doctor {
     @Column(nullable = false, length = 9)
     private String licenseNumber;
 
+    @OneToMany(mappedBy = "doctor")
+    private List<Appointment> appointments;
+
     @ManyToOne
     @JoinColumn(name="department_id", nullable=false)
     private Department department;
-
-    @ManyToMany
-    @JoinTable(
-            name = "doctor_patient",
-            joinColumns = @JoinColumn(name = "doctor_id"),
-            inverseJoinColumns = @JoinColumn(name = "patient_id"))
-    private List<Patient> patients;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

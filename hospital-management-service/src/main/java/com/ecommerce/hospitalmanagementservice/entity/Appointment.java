@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -30,7 +31,7 @@ public class Appointment {
     private String reason;
 
     @Column(nullable = false)
-    private LocalDateTime appointmentTime;
+    private LocalDate appointmentTime;
 
     @Enumerated(EnumType.STRING)
     private AppointmentStatus appointmentStatus;
@@ -38,6 +39,10 @@ public class Appointment {
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
+
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", nullable = false)
+    private Doctor doctor;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
