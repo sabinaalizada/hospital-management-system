@@ -4,6 +4,8 @@ import com.ecommerce.hospitalmanagementservice.enums.Gender;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.OnlyLetters;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.PhoneNumber;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,16 +30,17 @@ public class PatientRequestDto {
     @OnlyLetters
     private String lastName;
 
-    @NotBlank(message = "License number name can not be null or empty")
+    @NotBlank(message = "Phone number name can not be null or empty")
     @PhoneNumber
     private String phone;
 
     @NotBlank(message = "Address can not be null or empty")
     private String address;
 
-    @NotBlank(message = "Gender can not be null or empty")
+    @NotNull(message = "Gender can not be null")
     private Gender gender;
 
-    @NotBlank(message = "Birth date can not be null or empty")
+    @NotNull(message = "Birth date can not be null")
+    @Past(message = "Date of birth must be in the past")
     private LocalDate birthDate;
 }

@@ -57,4 +57,11 @@ public class Patient {
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        if (publicId == null) {
+            publicId = UUID.randomUUID();
+        }
+    }
 }

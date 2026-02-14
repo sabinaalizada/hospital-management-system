@@ -20,7 +20,7 @@ public class DoctorLicenseNumberValidator implements ConstraintValidator<DoctorL
             if (!Character.isDigit(s.charAt(i))) return false;
         }
 
-        return false;
+        return true;
     }
 
 /* example AH 123456

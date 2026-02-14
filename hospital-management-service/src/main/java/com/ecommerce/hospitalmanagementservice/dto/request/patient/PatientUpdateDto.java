@@ -3,7 +3,7 @@ package com.ecommerce.hospitalmanagementservice.dto.request.patient;
 import com.ecommerce.hospitalmanagementservice.enums.Gender;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.OnlyLetters;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.PhoneNumber;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,9 +32,8 @@ public class PatientUpdateDto {
     @Size(min = 3, max = 200, message = "Last name's length must be min = 3 and max = 30")
     private String address;
 
-    @NotBlank(message = "Gender can not be null or empty")
     private Gender gender;
 
-    @NotBlank(message = "Birth date can not be null or empty")
+    @Past(message = "Date of birth must be in the past")
     private LocalDate birthDate;
 }

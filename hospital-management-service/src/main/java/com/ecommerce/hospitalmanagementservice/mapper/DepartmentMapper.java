@@ -11,8 +11,6 @@ public interface DepartmentMapper {
 
     DepartmentResponseDto departmentToDepartmentResponseDto(Department department);
 
-
-//    @Mapping(target = "name", expression = "java(trim(departmentRequestDto.getName()))")
     @Mapping(target = "description", expression = "java(trim(departmentRequestDto.getDescription()))")
     Department departmentRequestDtoToDepartment(DepartmentRequestDto departmentRequestDto);
 
@@ -21,9 +19,6 @@ public interface DepartmentMapper {
 
     @BeforeMapping
     default void trimUpdateDto(DepartmentUpdateDto dto) {
-//        if (dto.getName() != null) {
-//            dto.setName(dto.getName().trim());
-//        }
         if (dto.getDescription() != null) {
             dto.setDescription(dto.getDescription().trim());
         }

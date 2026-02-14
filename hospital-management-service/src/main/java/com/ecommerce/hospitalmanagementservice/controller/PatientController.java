@@ -4,6 +4,7 @@ import com.ecommerce.hospitalmanagementservice.dto.request.patient.PatientReques
 import com.ecommerce.hospitalmanagementservice.dto.request.patient.PatientUpdateDto;
 import com.ecommerce.hospitalmanagementservice.dto.response.PatientResponseDto;
 import com.ecommerce.hospitalmanagementservice.service.PatientService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class PatientController {
     private final PatientService patientService;
 
     @PostMapping
-    public ResponseEntity<PatientResponseDto> createPatient(@RequestBody PatientRequestDto patient) {
+    public ResponseEntity<PatientResponseDto> createPatient(@Valid @RequestBody PatientRequestDto patient) {
         PatientResponseDto savedPatient = patientService.addPatient(patient);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPatient);
     }
@@ -38,7 +39,7 @@ public class PatientController {
     @PatchMapping("/{id}")
     public ResponseEntity<PatientResponseDto> updatePatient(
             @PathVariable Long id,
-            @RequestBody PatientUpdateDto patientUpdateDto) {
+            @Valid @RequestBody PatientUpdateDto patientUpdateDto) {
 
         PatientResponseDto updatedPatient = patientService.updatePatient(patientUpdateDto, id);
         return ResponseEntity.status(HttpStatus.OK).body(updatedPatient);
