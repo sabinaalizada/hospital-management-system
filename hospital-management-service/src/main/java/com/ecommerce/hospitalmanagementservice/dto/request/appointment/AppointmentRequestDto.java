@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 public class AppointmentRequestDto {
 
-    @NotBlank(message = "Reason can not be null or empty")
+    @NotBlank(message = "Reason cann not be null or empty")
     @Size(min = 3, max = 150, message = "Reason's length must be min = 3 and max = 150")
     @OnlyLetters
     private String reason;
