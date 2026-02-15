@@ -6,12 +6,18 @@ import com.ecommerce.hospitalmanagementservice.dto.response.PatientResponseDto;
 import com.ecommerce.hospitalmanagementservice.entity.Patient;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface PatientService {
     PatientResponseDto addPatient(PatientRequestDto patientRequestDto);
-    PatientResponseDto updatePatient(PatientUpdateDto patientUpdateDto, Long id);
-    PatientResponseDto getPatientById(Long id);
+
+    PatientResponseDto updatePatient(PatientUpdateDto patientUpdateDto, UUID publicId);
+
+    PatientResponseDto getPatientById(UUID publicId);
+
     List<PatientResponseDto> getAllPatients();
-    String deletePatientById(Long id);
-    Patient getPatientEntityById(Long id);
+
+    String deletePatientById(UUID publicId);
+
+    Patient getPatientEntityById(UUID publicId);
 }

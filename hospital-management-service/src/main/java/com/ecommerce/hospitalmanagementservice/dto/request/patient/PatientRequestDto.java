@@ -2,10 +2,10 @@ package com.ecommerce.hospitalmanagementservice.dto.request.patient;
 
 import com.ecommerce.hospitalmanagementservice.enums.Gender;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.OnlyLetters;
+import com.ecommerce.hospitalmanagementservice.validation.annotation.PastDate;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.PhoneNumber;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,6 +41,6 @@ public class PatientRequestDto {
     private Gender gender;
 
     @NotNull(message = "Birth date can not be null")
-    @Past(message = "Date of birth must be in the past")
+    @PastDate(min = "1900-01-01")
     private LocalDate birthDate;
 }

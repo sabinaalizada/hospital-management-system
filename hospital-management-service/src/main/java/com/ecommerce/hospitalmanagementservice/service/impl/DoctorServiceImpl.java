@@ -5,17 +5,19 @@ import com.ecommerce.hospitalmanagementservice.dto.request.doctor.DoctorUpdateDt
 import com.ecommerce.hospitalmanagementservice.dto.response.DoctorResponseDto;
 import com.ecommerce.hospitalmanagementservice.entity.Department;
 import com.ecommerce.hospitalmanagementservice.entity.Doctor;
+import com.ecommerce.hospitalmanagementservice.exception.department.DepartmentNotFoundException;
 import com.ecommerce.hospitalmanagementservice.exception.doctor.DoctorAlreadyExistException;
 import com.ecommerce.hospitalmanagementservice.exception.doctor.DoctorNotFoundException;
 import com.ecommerce.hospitalmanagementservice.mapper.DoctorMapper;
+import com.ecommerce.hospitalmanagementservice.repository.DepartmentRepo;
 import com.ecommerce.hospitalmanagementservice.repository.DoctorRepo;
-import com.ecommerce.hospitalmanagementservice.service.DepartmentService;
 import com.ecommerce.hospitalmanagementservice.service.DoctorService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,11 +25,12 @@ public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorMapper doctorMapper;
     private final DoctorRepo doctorRepo;
-    private final DepartmentService departmentService;
+    private final DepartmentRepo departmentRepo;
 
     @Override
     public DoctorResponseDto addDoctor(DoctorRequestDto doctorRequestDto) {
-        Department department = departmentService.getDepartmentById(doctorRequestDto.getDepartmentId());
+        Department department = departmentRepo.findById(doctorRequestDto.getDepartmentId())
+                .orElseThrow(()->new DepartmentNotFoundException("id", doctorRequestDto.getDepartmentId()) );
 
         Doctor doctor = doctorMapper.doctorRequestDtoToDoctor(doctorRequestDto);
 
@@ -43,17 +46,17 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Transactional
     @Override
-    public DoctorResponseDto updateDoctor(DoctorUpdateDto updateDto, long id) {
-        Doctor doctor = getDoctorById(id);
+    public DoctorResponseDto updateDoctor(DoctorUpdateDto updateDto, UUID publicId) {
+        Doctor doctor = getDoctorById(publicId);
 
         if (updateDto.getLicenseNumber() != null) {
-            if (doctorRepo.existsDoctorByLicenseNumberAndIdNot(updateDto.getLicenseNumber(), id)) {
+            if (doctorRepo.existsDoctorByLicenseNumberAndIdNot(updateDto.getLicenseNumber(), doctor.getId())) {
                 throw new DoctorAlreadyExistException("Doctor already exist");
             }
         }
 
         if (updateDto.getDepartmentId() != null) {
-            departmentService.getDepartmentById(updateDto.getDepartmentId());
+            departmentRepo.findById(updateDto.getDepartmentId());
         }
 
         doctorMapper.updateDoctor(updateDto, doctor);
@@ -64,15 +67,14 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Transactional
     @Override
-    public String deleteDoctor(long id) {
-        Doctor doctor = getDoctorById(id);
+    public void deleteDoctor(UUID publicId) {
+        Doctor doctor = getDoctorById(publicId);
         doctorRepo.delete(doctor);
-        return "Doctor deleted";
     }
 
     @Override
-    public DoctorResponseDto getDoctor(long id) {
-        return doctorMapper.doctorToDoctorResponseDto(getDoctorById(id));
+    public DoctorResponseDto getDoctor(UUID publicId) {
+        return doctorMapper.doctorToDoctorResponseDto(getDoctorById(publicId));
     }
 
     @Override
@@ -84,7 +86,7 @@ public class DoctorServiceImpl implements DoctorService {
                 .toList();
     }
 
-    private Doctor getDoctorById(long id) {
-        return doctorRepo.findById(id).orElseThrow(() -> new DoctorNotFoundException("id", id));
+    private Doctor getDoctorById(UUID publicId) {
+        return doctorRepo.findByPublicId(publicId).orElseThrow(() -> new DoctorNotFoundException("publicId", publicId));
     }
 }

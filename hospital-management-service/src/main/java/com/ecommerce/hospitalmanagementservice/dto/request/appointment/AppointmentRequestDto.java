@@ -1,6 +1,7 @@
 package com.ecommerce.hospitalmanagementservice.dto.request.appointment;
 
 import com.ecommerce.hospitalmanagementservice.enums.AppointmentStatus;
+import com.ecommerce.hospitalmanagementservice.validation.annotation.FutureDate;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.OnlyLetters;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
@@ -11,13 +12,13 @@ import java.time.LocalDate;
 
 public class AppointmentRequestDto {
 
-    @NotBlank(message = "Reason cann not be null or empty")
+    @NotBlank(message = "Reason can not be null or empty")
     @Size(min = 3, max = 150, message = "Reason's length must be min = 3 and max = 150")
     @OnlyLetters
     private String reason;
 
     @NotNull(message = "Appointment time can not be null")
-    @Future(message = "Appointment time must be in the future")
+    @FutureDate(year = 1, message = "Appointment must be within 1 year from today")
     private LocalDate appointmentTime;
 
     @NotBlank(message = "Appointment status can not be null or empty")

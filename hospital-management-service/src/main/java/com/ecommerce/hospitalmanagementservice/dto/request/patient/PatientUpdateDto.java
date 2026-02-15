@@ -2,8 +2,8 @@ package com.ecommerce.hospitalmanagementservice.dto.request.patient;
 
 import com.ecommerce.hospitalmanagementservice.enums.Gender;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.OnlyLetters;
+import com.ecommerce.hospitalmanagementservice.validation.annotation.PastDate;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.PhoneNumber;
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +34,6 @@ public class PatientUpdateDto {
 
     private Gender gender;
 
-    @Past(message = "Date of birth must be in the past")
+    @PastDate(min = "1900-01-01")
     private LocalDate birthDate;
 }

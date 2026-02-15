@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,16 +29,16 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public PatientResponseDto updatePatient(PatientUpdateDto patientUpdateDto, Long id) {
-        Patient patient = getPatientEntityById(id);
+    public PatientResponseDto updatePatient(PatientUpdateDto patientUpdateDto, UUID publicId) {
+        Patient patient = getPatientEntityById(publicId);
         patientMapper.update(patient, patientUpdateDto);
         patientRepo.save(patient);
         return patientMapper.patientToPatientResponseDto(patient);
     }
 
     @Override
-    public PatientResponseDto getPatientById(Long id) {
-        return patientMapper.patientToPatientResponseDto(getPatientEntityById(id));
+    public PatientResponseDto getPatientById(UUID publicId) {
+        return patientMapper.patientToPatientResponseDto(getPatientEntityById(publicId));
     }
 
     @Override
@@ -50,14 +51,13 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public String deletePatientById(Long id) {
-        Patient patient = getPatientEntityById(id);
+    public void deletePatientById(UUID publicId) {
+        Patient patient = getPatientEntityById(publicId);
         patientRepo.delete(patient);
-        return "Patient deleted successfully";
     }
 
     @Override
-    public Patient getPatientEntityById(Long id) {
-        return patientRepo.findById(id).orElse(null);
+    public Patient getPatientEntityById(UUID publicId) {
+        return patientRepo.findByPublicId(publicId).orElse(null);
     }
 }

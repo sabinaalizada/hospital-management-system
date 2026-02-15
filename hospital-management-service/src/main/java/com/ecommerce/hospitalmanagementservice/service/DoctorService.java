@@ -5,15 +5,16 @@ import com.ecommerce.hospitalmanagementservice.dto.request.doctor.DoctorUpdateDt
 import com.ecommerce.hospitalmanagementservice.dto.response.DoctorResponseDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface DoctorService {
     DoctorResponseDto addDoctor(DoctorRequestDto doctorRequestDto);
 
-    DoctorResponseDto updateDoctor(DoctorUpdateDto updateDto, long id);
+    DoctorResponseDto updateDoctor(DoctorUpdateDto updateDto, UUID publicId);
 
-    String deleteDoctor(long id);
+    void deleteDoctor(UUID publicId);
 
-    DoctorResponseDto getDoctor(long id);
+    DoctorResponseDto getDoctor(UUID publicId);
 
     List<DoctorResponseDto> getDoctors();
 }

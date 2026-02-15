@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,24 +31,24 @@ public class PatientController {
         return ResponseEntity.status(HttpStatus.OK).body(patients);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PatientResponseDto> getPatientById(@PathVariable Long id) {
-        PatientResponseDto patient = patientService.getPatientById(id);
+    @GetMapping("/{publicId}")
+    public ResponseEntity<PatientResponseDto> getPatientById(@PathVariable UUID publicId) {
+        PatientResponseDto patient = patientService.getPatientById(publicId);
         return ResponseEntity.status(HttpStatus.OK).body(patient);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{publicId}")
     public ResponseEntity<PatientResponseDto> updatePatient(
-            @PathVariable Long id,
+            @PathVariable UUID publicId,
             @Valid @RequestBody PatientUpdateDto patientUpdateDto) {
 
-        PatientResponseDto updatedPatient = patientService.updatePatient(patientUpdateDto, id);
+        PatientResponseDto updatedPatient = patientService.updatePatient(patientUpdateDto, publicId);
         return ResponseEntity.status(HttpStatus.OK).body(updatedPatient);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePatient(@PathVariable Long id) {
-        String response = patientService.deletePatientById(id);
+    @DeleteMapping("/{publicId}")
+    public ResponseEntity<String> deletePatient(@PathVariable UUID publicId) {
+        String response = patientService.deletePatientById(publicId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,11 +25,11 @@ public class DoctorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(doctorResponseDto);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{publicId}")
     public ResponseEntity<DoctorResponseDto> updateDoctor(
             @Valid @RequestBody DoctorUpdateDto updateDto,
-            @PathVariable Long id) {
-        DoctorResponseDto doctorResponseDto = doctorService.updateDoctor(updateDto,id);
+            @PathVariable UUID publicId) {
+        DoctorResponseDto doctorResponseDto = doctorService.updateDoctor(updateDto,publicId);
         return ResponseEntity.status(HttpStatus.OK).body(doctorResponseDto);
     }
 
@@ -38,15 +39,15 @@ public class DoctorController {
         return ResponseEntity.status(HttpStatus.OK).body(responseDtos);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<DoctorResponseDto> getDoctorById(@PathVariable Long id) {
-        DoctorResponseDto doctorResponseDto = doctorService.getDoctor(id);
+    @GetMapping("/{publicId}")
+    public ResponseEntity<DoctorResponseDto> getDoctorById(@PathVariable UUID publicId) {
+        DoctorResponseDto doctorResponseDto = doctorService.getDoctor(publicId);
         return ResponseEntity.status(HttpStatus.OK).body(doctorResponseDto);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteDoctorById(@PathVariable Long id) {
-        String response = doctorService.deleteDoctor(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+    @DeleteMapping("/{publicId}")
+    public ResponseEntity<Void> deleteDoctorById(@PathVariable UUID publicId) {
+        doctorService.deleteDoctor(publicId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

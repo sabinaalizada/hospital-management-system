@@ -7,17 +7,18 @@ import com.ecommerce.hospitalmanagementservice.entity.Department;
 import com.ecommerce.hospitalmanagementservice.entity.Doctor;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface DepartmentService {
     DepartmentResponseDto addDepartment(DepartmentRequestDto departmentRequestDto);
 
     List<DepartmentResponseDto> getAllDepartments();
 
-    DepartmentResponseDto updateDepartment(DepartmentUpdateDto departmentUpdateDto, Long id);
+    DepartmentResponseDto updateDepartment(DepartmentUpdateDto departmentUpdateDto, UUID publicId);
 
-    String deleteDepartment(Long id);
+    void deleteDepartment(UUID publicId);
 
     DepartmentResponseDto getDepartmentByName(String departmentName);
 
-    Department getDepartmentById(Long id);
+    Department getDepartmentByPublicId(UUID publicId);
 }

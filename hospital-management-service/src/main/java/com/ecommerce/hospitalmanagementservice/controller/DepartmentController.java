@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,19 +28,19 @@ public class DepartmentController {
         return new ResponseEntity<>(departmentResponseDto, HttpStatus.CREATED);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{publicId}")
     public ResponseEntity<DepartmentResponseDto> updateDepartment(
             @Valid @RequestBody DepartmentUpdateDto departmentUpdateDto,
-            @PathVariable Long id) {
+            @PathVariable UUID publicId) {
         DepartmentResponseDto departmentResponseDto = departmentService
-                .updateDepartment(departmentUpdateDto, id);
+                .updateDepartment(departmentUpdateDto, publicId);
         return new ResponseEntity<>(departmentResponseDto, HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{id}")
-    public ResponseEntity<String> deleteDepartment(@PathVariable Long id) {
-        String str = departmentService.deleteDepartment(id);
-        return new ResponseEntity<>(str, HttpStatus.NO_CONTENT);
+    @GetMapping("/delete/{publicId}")
+    public ResponseEntity<Void> deleteDepartment(@PathVariable UUID publicId) {
+        departmentService.deleteDepartment(publicId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/get-all")

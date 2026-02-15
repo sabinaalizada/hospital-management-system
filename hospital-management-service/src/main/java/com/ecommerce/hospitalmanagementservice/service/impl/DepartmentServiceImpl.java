@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,11 +48,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Transactional
     @Override
-    public DepartmentResponseDto updateDepartment(DepartmentUpdateDto departmentUpdateDto, Long id) {
-        Department department = getDepartmentById(id);
+    public DepartmentResponseDto updateDepartment(DepartmentUpdateDto departmentUpdateDto, UUID publicId) {
+        Department department = getDepartmentByPublicId(publicId);
 
         if (departmentUpdateDto.getName() != null) {
-            if (departmentRepo.existsByNameIgnoreCaseAndIdNot(departmentUpdateDto.getName(), id)) {
+            if (departmentRepo.existsByNameIgnoreCaseAndIdNot(departmentUpdateDto.getName(), department.getId())) {
                 throw new DepartmentAlreadyExistException(departmentUpdateDto.getName());
             }
         }
@@ -64,10 +65,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Transactional
     @Override
-    public String deleteDepartment(Long id) {
-        Department department = getDepartmentById(id);
+    public void deleteDepartment(UUID publicId) {
+        Department department = getDepartmentByPublicId(publicId);
         departmentRepo.delete(department);
-        return "Department deleted successfully";
     }
 
     @Override
@@ -78,9 +78,9 @@ public class DepartmentServiceImpl implements DepartmentService {
         return departmentMapper.departmentToDepartmentResponseDto(department);
     }
 
-    public Department getDepartmentById(Long id) {
+    public Department getDepartmentByPublicId(UUID publicId) {
         return departmentRepo
-                .findById(id)
-                .orElseThrow(() -> new DepartmentNotFoundException("id", id));
+                .findByPublicId(publicId)
+                .orElseThrow(() -> new DepartmentNotFoundException("publicId", publicId));
     }
 }
