@@ -8,7 +8,7 @@ import org.mapstruct.*;
 
 import java.time.LocalDate;
 
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PatientMapper {
 
     @Mapping(target = "birthDate", expression = "java(trimDate(patientRequestDto.getBirthDate()))")

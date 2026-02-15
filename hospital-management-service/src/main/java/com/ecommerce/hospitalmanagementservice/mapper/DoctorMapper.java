@@ -6,7 +6,7 @@ import com.ecommerce.hospitalmanagementservice.dto.response.DoctorResponseDto;
 import com.ecommerce.hospitalmanagementservice.entity.Doctor;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DoctorMapper {
 
     @Mapping(target = "department.id", source = "departmentId")

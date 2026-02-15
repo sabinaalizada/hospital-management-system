@@ -25,7 +25,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: appointment_time
+                  name: start_time
                   type: TIMESTAMP
                   constraints:
                     nullable: false

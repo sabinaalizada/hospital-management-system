@@ -11,6 +11,7 @@ import com.ecommerce.hospitalmanagementservice.exception.doctor.DoctorNotFoundEx
 import com.ecommerce.hospitalmanagementservice.mapper.DoctorMapper;
 import com.ecommerce.hospitalmanagementservice.repository.DepartmentRepo;
 import com.ecommerce.hospitalmanagementservice.repository.DoctorRepo;
+import com.ecommerce.hospitalmanagementservice.service.DepartmentService;
 import com.ecommerce.hospitalmanagementservice.service.DoctorService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +27,11 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorMapper doctorMapper;
     private final DoctorRepo doctorRepo;
     private final DepartmentRepo departmentRepo;
+    private final DepartmentService departmentService;
 
     @Override
     public DoctorResponseDto addDoctor(DoctorRequestDto doctorRequestDto) {
-        Department department = departmentRepo.findById(doctorRequestDto.getDepartmentId())
-                .orElseThrow(()->new DepartmentNotFoundException("id", doctorRequestDto.getDepartmentId()) );
-
+        Department department = departmentService.getDepartmentByPublicId(doctorRequestDto.getDepartmentId());
         Doctor doctor = doctorMapper.doctorRequestDtoToDoctor(doctorRequestDto);
 
         doctor.setDepartment(department);
@@ -86,7 +86,7 @@ public class DoctorServiceImpl implements DoctorService {
                 .toList();
     }
 
-    private Doctor getDoctorById(UUID publicId) {
+    public Doctor getDoctorById(UUID publicId) {
         return doctorRepo.findByPublicId(publicId).orElseThrow(() -> new DoctorNotFoundException("publicId", publicId));
     }
 }

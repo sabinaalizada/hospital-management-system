@@ -3,11 +3,12 @@ package com.ecommerce.hospitalmanagementservice.dto.response;
 
 import com.ecommerce.hospitalmanagementservice.enums.AppointmentStatus;
 
-import java.time.LocalDate;
+
+import java.time.ZonedDateTime;
 
 public record AppointmentResponseDto(Long id,
                                      String reason,
-                                     LocalDate appointmentTime,
+                                     ZonedDateTime appointmentTime,
                                      AppointmentStatus appointmentStatus,
                                      Long patientId,
                                      Long doctorId) {

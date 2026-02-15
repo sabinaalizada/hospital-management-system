@@ -3,13 +3,23 @@ package com.ecommerce.hospitalmanagementservice.dto.request.appointment;
 import com.ecommerce.hospitalmanagementservice.enums.AppointmentStatus;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.FutureDate;
 import com.ecommerce.hospitalmanagementservice.validation.annotation.OnlyLetters;
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.UUID;
 
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AppointmentRequestDto {
 
     @NotBlank(message = "Reason can not be null or empty")
@@ -19,14 +29,14 @@ public class AppointmentRequestDto {
 
     @NotNull(message = "Appointment time can not be null")
     @FutureDate(year = 1, message = "Appointment must be within 1 year from today")
-    private LocalDate appointmentTime;
+    private ZonedDateTime startTime;
 
     @NotBlank(message = "Appointment status can not be null or empty")
     private AppointmentStatus appointmentStatus;
 
     @NotNull(message = "Patient id can not be null")
-    private Long patientId;
+    private UUID patientId;
 
     @NotNull(message = "Doctor id can not be null")
-    private Long doctorId;
+    private UUID doctorId;
 }

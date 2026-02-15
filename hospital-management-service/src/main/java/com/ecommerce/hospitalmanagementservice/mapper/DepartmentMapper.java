@@ -6,7 +6,7 @@ import com.ecommerce.hospitalmanagementservice.dto.response.DepartmentResponseDt
 import com.ecommerce.hospitalmanagementservice.entity.Department;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DepartmentMapper {
 
     DepartmentResponseDto departmentToDepartmentResponseDto(Department department);
@@ -24,8 +24,7 @@ public interface DepartmentMapper {
         }
     }
 
-    default String trim(String value){
+    default String trim(String value) {
         return value == null ? null : value.trim();
     }
-
 }

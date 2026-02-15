@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -41,5 +43,5 @@ public class DoctorRequestDto {
     private String licenseNumber;
 
     @NotNull(message = "Department id can not be null")
-    private Long departmentId;
+    private UUID departmentId;
 }
